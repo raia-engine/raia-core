@@ -2,8 +2,8 @@
 // Created by dolphilia on 2022/12/10.
 //
 
-#ifndef RAIA_CORE_PLATFORMS_H
-#define RAIA_CORE_PLATFORMS_H
+#ifndef RAIA_CORE_PLATFORM_H
+#define RAIA_CORE_PLATFORM_H
 
 #ifdef _WIN32
 #define __WIN32__
@@ -43,4 +43,4 @@
 #define __LINUX__
 #endif
 
-#endif //RAIA_CORE_PLATFORMS_H
+#endif //RAIA_CORE_PLATFORM_H

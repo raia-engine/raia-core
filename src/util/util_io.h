@@ -7,7 +7,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "../platforms.h"
+#include "../meta/platform.h"
 
 char *load_string_filename(const char *filename);
 

@@ -6,7 +6,7 @@
 #define RAIA_CORE_STATIC_PLUGIN_LOADER_H
 
 #include <stdio.h>
-#include "../platforms.h"
+#include "../meta/platform.h"
 
 #ifdef __WINDOWS__
 #include <windows.h>
