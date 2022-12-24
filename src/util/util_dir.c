@@ -4,6 +4,7 @@
 
 #include "util_dir.h"
 
+/*
 char * get_exe_path(){
 #ifdef __WINDOWS__
     TCHAR path[MAX_PATH];   //パス取得用
@@ -45,6 +46,7 @@ char * get_exe_path(){
 #endif
     return path;
 }
+*/
 
 char *get_cur_path() {
     char cwd[PATH_MAX];

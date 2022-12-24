@@ -18,7 +18,7 @@
 #include <mach-o/dyld.h>
 #endif
 
-char * get_exe_path();
+//char * get_exe_path();
 char *get_cur_path();
 
 #endif //RAIA_CORE_UTIL_DIR_H
