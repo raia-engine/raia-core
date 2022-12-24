@@ -79,7 +79,18 @@ static duk_ret_t regist_raia_lib_init(duk_context *ctx) {
 
 static duk_ret_t regist_raia_lib_open(duk_context *ctx) {
     const char *dll_file = duk_to_string(ctx, 0);
-    open_plugin(dll_file);
+#ifdef __WINDOWS__
+    const char *extension = "dll";
+#endif
+#ifdef __MACOS__
+    const char *extension = "dylib";
+#endif
+#ifdef __LINUX__
+    const char *extension = "so";
+#endif
+    char dll_file_extension[500];
+    sprintf(dll_file_extension, "%s.%s", dll_file, extension);
+    open_plugin(dll_file_extension);
     return NO_RETURN_VALUE;
 }
 
@@ -124,6 +135,12 @@ static void regist_functions(duk_context *ctx) {
 
 static void regist_objects(duk_context *ctx) {
     char *objects =
+            //  assert
+            //  do_file
+            // abort
+            // exit
+            // exec
+            // sleep
             "var print = function(a){_raia_c_puts(a);};"
             "var Raia = {"
             "    Context: {"

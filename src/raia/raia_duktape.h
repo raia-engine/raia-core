@@ -12,6 +12,7 @@
 #include "../static/static_arg.h"
 #include "../duktape-module/duk_module_duktape.h"
 #include "../static/static_plugin_loader.h"
+#include "../meta/platform.h"
 #include "../meta/version.h"
 #include "../util/util_dir.h"
 
