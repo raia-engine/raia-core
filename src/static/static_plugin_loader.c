@@ -46,3 +46,9 @@ duk_ret_t (*add_plugin_func(duk_context *ctx, const char *dll_func_name))(duk_co
     list_rpush(func_list, func_list_node);
     return p_func;
 }
+
+void (*add_plugin_init(const char *dll_func_name))(void) {
+    raia_handle_t handle = list_at(lib_list, lib_list_index)->val;
+    void (*p_func)(void) = raia_dlsym(handle, dll_func_name);
+    return p_func;
+}

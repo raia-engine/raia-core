@@ -13,6 +13,12 @@ static duk_ret_t regist_raia_c_puts(duk_context *ctx) {
     return YES_RETURN_VALUE;
 }
 
+static duk_ret_t regist_io_load_string_filename(duk_context *ctx) {
+    char * ret = load_string_filename(duk_to_string(ctx, 0));
+    duk_push_string(ctx, ret);
+    return 1;  /* no return value (= undefined) */
+}
+
 int get_argv_length(char argc, char *argv[]) {
     int len = 0;
     for (int i = 0; i < argc; i += 1) {
@@ -72,11 +78,6 @@ static duk_ret_t regist_raia_context_init(duk_context *ctx) {
     return 1;
 }
 
-static duk_ret_t regist_raia_lib_init(duk_context *ctx) {
-    init_plugin_loader();
-    return NO_RETURN_VALUE;
-}
-
 static duk_ret_t regist_raia_lib_open(duk_context *ctx) {
     const char *dll_file = duk_to_string(ctx, 0);
 #ifdef __WINDOWS__
@@ -91,6 +92,15 @@ static duk_ret_t regist_raia_lib_open(duk_context *ctx) {
     char dll_file_extension[500];
     sprintf(dll_file_extension, "%s.%s", dll_file, extension);
     open_plugin(dll_file_extension);
+    return NO_RETURN_VALUE;
+}
+
+static duk_ret_t regist_raia_lib_init(duk_context *ctx) {
+    const char *dll_file_name = duk_to_string(ctx, 0);
+    regist_raia_lib_open(ctx);
+    const char *dll_func_name = "init";
+    void (*p_func)(void) = add_plugin_init(dll_func_name);
+    p_func();
     return NO_RETURN_VALUE;
 }
 
@@ -124,8 +134,9 @@ static duk_ret_t regist_raia_lib_func(duk_context *ctx) {
 
 static void regist_functions(duk_context *ctx) {
     regist_func(ctx, regist_raia_c_puts, "_raia_c_puts", 1);
+    regist_func(ctx, regist_io_load_string_filename, "_io_load_string_filename", 1);
     regist_func(ctx, regist_raia_context_init, "_raia_context_init", 0);
-    regist_func(ctx, regist_raia_lib_init, "_raia_lib_init", 0);
+    regist_func(ctx, regist_raia_lib_init, "_raia_lib_init", 1);
     regist_func(ctx, regist_raia_lib_open, "_raia_lib_open", 1);
     regist_func(ctx, regist_raia_lib_close, "_raia_lib_close", 0);
     regist_func(ctx, regist_raia_lib_close_all, "_raia_lib_close_all", 0);
@@ -147,13 +158,16 @@ static void regist_objects(duk_context *ctx) {
             "        init: function(){return _raia_context_init();},"
             "    },"
             "    Lib: {"
-            "        init: function(){_raia_lib_init();},"
+            "        init: function(a){_raia_lib_init(a);},"
             "        open: function(a){_raia_lib_open(a);},"
             "        close: function(){_raia_lib_close();},"
             "        closeAll: function(){_raia_lib_close_all();},"
             "        funcGlobal: function(a,b,c){_raia_lib_func_global(a,b,c);},"
             "        func: function(a,b){return _raia_lib_func(a,b);},"
             "    },"
+            "    IO: {"
+            "       loadStringFilename: function(a){return _io_load_string_filename(a);}"
+            "    }"
             "};";
     duk_eval_string(ctx, objects);
 }
@@ -167,9 +181,9 @@ static void enable_module(duk_context *ctx) {
     char *code =
             "Duktape.modSearch = function (id, require, exports, module) {"
             "    var filename = 'modules/' + id + '.js';"
-            "    var src = IO.loadStringFilename(filename);"
+            "    var src = Raia.IO.loadStringFilename(filename);"
             "    if (typeof src === 'string') {"
-            "        print('loaded ECMAScript:', filename);"
+            "        /*print('loaded ECMAScript:', filename);*/"
             "    } else {"
             "        throw new Error('module not found: ' + id);"
             "    }"

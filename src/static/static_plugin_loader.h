@@ -42,4 +42,6 @@ void close_all_plugin(void);
 
 duk_ret_t (*add_plugin_func(duk_context *ctx, const char *func_name))(duk_context *ctx);
 
+void (*add_plugin_init(const char *func_name))(void);
+
 #endif //RAIA_CORE_STATIC_PLUGIN_LOADER_H
