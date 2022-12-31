@@ -51,20 +51,26 @@ static duk_ret_t regist_raia_context_init(duk_context *ctx) {
     char *argv_joined = get_argv_joined(argc, argv, argv_len);
     char* path_exe = get_executable_path();
     char json[500];
+    char* none = "";
+
+    replace_char(path_exe, '\\', '/');
+    replace_char(argv_joined, '\\', '/');
 
     sprintf(json,
-            "{"
-            "    \"version\": {"
-            "        \"core\": \"%s\""
-            "    },"
-            "    \"path\": {"
-            "        \"exe\": \"%s\""
-            "    },"
-            "    \"arg\": {"
-            "        \"c\": %d,"
-            "        \"v\": [%s]"
-            "    }"
-            "}",
+            "{\n"
+            "    \"version\": {\n"
+            "        \"core\": \"%s\"\n"
+            "    },\n"
+            "    \"path\": {\n"
+            "        \"exe\": \"%s\"\n"
+            "    },\n"
+            "    \"arg\": {\n"
+            "        \"c\": %d,\n"
+            "        \"v\": [\n"
+            "            %s\n"
+            "        ]\n"
+            "    }\n"
+            "}\n",
             RAIA_CORE_VERSION,
             path_exe,
             get_argc(),

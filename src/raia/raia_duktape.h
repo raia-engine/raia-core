@@ -15,6 +15,7 @@
 #include "../meta/platform.h"
 #include "../meta/version.h"
 #include "../util/util_dir.h"
+#include "../util/util_string.h"
 
 void duktape_start(void);
 

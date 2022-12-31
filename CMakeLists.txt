@@ -32,6 +32,6 @@ add_executable(raia_core
         src/whereami/whereami.h
         src/wrapper/wrapper_whereami.c
         src/static/static_arg.c
-        src/static/static_arg.h)
+        src/static/static_arg.h src/util/util_string.c src/util/util_string.h)
 
 target_link_libraries(raia_core m)
