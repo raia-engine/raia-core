@@ -42,7 +42,7 @@ char *get_argv_joined(int argc, char *argv[], int len) {
         strcat(str, argv[i]);
         strcat(str, "\"");
     }
-    printf("%s ", str);
+    //printf("%s ", str);
     return str;
 }
 
@@ -79,7 +79,7 @@ static duk_ret_t regist_raia_context_init(duk_context *ctx) {
             get_argc(),
             argv_joined
             );
-    printf("%s", json);
+    //printf("%s", json);
     free(path_exe);
     free(argv_joined);
 
