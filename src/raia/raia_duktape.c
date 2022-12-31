@@ -83,8 +83,8 @@ static duk_ret_t regist_raia_context_init(duk_context *ctx) {
     free(path_exe);
     free(argv_joined);
 
-    //duk_push_string(ctx, json);
-    //duk_json_decode(ctx, -1);
+    duk_push_string(ctx, json);
+    duk_json_decode(ctx, -1);
     return 1;
 }
 
