@@ -54,9 +54,10 @@ static duk_ret_t regist_raia_context_init(duk_context *ctx) {
     char* path_exe = get_executable_path();
     char json[500];
     char* none = "";
-
-    //replace_char(path_exe, '\\', '/');
-    //replace_char(argv_joined, '\\', '/');
+#ifdef __WINDOWS__
+    replace_char(path_exe, '\\', '/');
+    replace_char(argv_joined, '\\', '/');
+#endif
 
     sprintf(json,
             "{\n"
