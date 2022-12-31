@@ -32,8 +32,9 @@ int get_argv_length(char argc, char *argv[]) {
 }
 
 char *get_argv_joined(int argc, char *argv[], int len) {
-    char *str = (char *)malloc(sizeof(char) * len);
-    for (int i = 0; i < argc; i += 1) {
+    char *str = (char *)calloc(len, sizeof(char));
+    int i;
+    for (i = 0; i < argc; i += 1) {
         if (i > 0) {
             strcat(str, ",");
         }
@@ -41,6 +42,7 @@ char *get_argv_joined(int argc, char *argv[], int len) {
         strcat(str, argv[i]);
         strcat(str, "\"");
     }
+    printf("%s ", str);
     return str;
 }
 
@@ -53,8 +55,9 @@ static duk_ret_t regist_raia_context_init(duk_context *ctx) {
     char json[500];
     char* none = "";
 
-    replace_char(path_exe, '\\', '/');
-    replace_char(argv_joined, '\\', '/');
+
+    //replace_char(path_exe, '\\', '/');
+    //replace_char(argv_joined, '\\', '/');
 
     sprintf(json,
             "{\n"
@@ -76,11 +79,12 @@ static duk_ret_t regist_raia_context_init(duk_context *ctx) {
             get_argc(),
             argv_joined
             );
+    printf("%s", json);
     free(path_exe);
     free(argv_joined);
 
-    duk_push_string(ctx, json);
-    duk_json_decode(ctx, -1);
+    //duk_push_string(ctx, json);
+    //duk_json_decode(ctx, -1);
     return 1;
 }
 
