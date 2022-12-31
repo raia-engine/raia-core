@@ -132,7 +132,7 @@ static duk_ret_t regist_raia_lib_func(duk_context *ctx) {
     return 1;
 }
 
-static void regist_functions(duk_context *ctx) {
+static void regist_raia_functions(duk_context *ctx) {
     regist_func(ctx, regist_raia_c_puts, "_raia_c_puts", 1);
     regist_func(ctx, regist_io_load_string_filename, "_io_load_string_filename", 1);
     regist_func(ctx, regist_raia_context_init, "_raia_context_init", 0);
@@ -144,7 +144,7 @@ static void regist_functions(duk_context *ctx) {
     regist_func(ctx, regist_raia_lib_func, "_raia_lib_func", 2);
 }
 
-static void regist_objects(duk_context *ctx) {
+static void regist_raia_objects(duk_context *ctx) {
     char *objects =
             //  assert
             //  do_file
@@ -172,9 +172,15 @@ static void regist_objects(duk_context *ctx) {
     duk_eval_string(ctx, objects);
 }
 
-static void regist_elements(duk_context *ctx) {
-    regist_functions(ctx);
-    regist_objects(ctx);
+static void regist_raia_context(duk_context *ctx) {
+    char *code = "Raia.context = Raia.Context.init();";
+    duk_eval_string(ctx, code);
+}
+
+static void regist_raia_elements(duk_context *ctx) {
+    regist_raia_functions(ctx);
+    regist_raia_objects(ctx);
+    regist_raia_context(ctx);
 }
 
 static void enable_module(duk_context *ctx) {
@@ -194,7 +200,7 @@ static void enable_module(duk_context *ctx) {
 
 void duktape_start(void) {
     duk_context *ctx = get_duk_ctx();
-    regist_elements(ctx);
+    regist_raia_elements(ctx);
     duk_module_duktape_init(ctx);
     enable_module(ctx);
     load_script_filename(ctx, "startup.js");
