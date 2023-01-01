@@ -81,7 +81,7 @@ static duk_ret_t regist_raia_context_init(duk_context *ctx) {
             );
     //printf("%s", json);
     free(path_exe);
-    free(argv_joined);
+    //free(argv_joined);
 
     duk_push_string(ctx, json);
     duk_json_decode(ctx, -1);
@@ -138,6 +138,7 @@ static duk_ret_t regist_raia_lib_func(duk_context *ctx) {
     const char *dll_func_name = duk_to_string(ctx, 0);
     int nargs = (int) duk_to_number(ctx, 1);
     duk_ret_t (*p_func)(duk_context *ctx) = add_plugin_func(ctx, dll_func_name);
+    printf("%s\n", dll_func_name);
     duk_push_c_function(ctx, p_func, nargs);
     return 1;
 }

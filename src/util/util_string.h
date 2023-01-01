@@ -5,6 +5,11 @@
 #ifndef RAIA_CORE_UTIL_STRING_H
 #define RAIA_CORE_UTIL_STRING_H
 
+#include "../meta/platform.h"
+#ifdef __WINDOWS__
+#define _CRT_SECURE_NO_WARNINGS
+#endif
+
 #include <assert.h>
 #include <stdio.h>
 #include <string.h>

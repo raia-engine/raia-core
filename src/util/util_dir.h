@@ -6,14 +6,18 @@
 #define RAIA_CORE_UTIL_DIR_H
 
 #include <stdio.h>
-#include <unistd.h>
+
 #include "../meta/platform.h"
 #include "limits.h"
 
 #ifdef __WINDOWS__
 #include <windows.h>
 #include <tchar.h>
+#else
+#include <unistd.h>
 #endif
+
+
 #ifdef __MACOS__
 #include <mach-o/dyld.h>
 #endif

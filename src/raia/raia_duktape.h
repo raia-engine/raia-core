@@ -5,6 +5,11 @@
 #ifndef RAIA_CORE_RAIA_DUKTAPE_H
 #define RAIA_CORE_RAIA_DUKTAPE_H
 
+#include "../meta/platform.h"
+#ifdef __WINDOWS__
+#define _CRT_SECURE_NO_WARNINGS
+#endif
+
 #include <string.h>
 #include "../wrapper/wrapper_duktape.h"
 #include "../wrapper/wrapper_whereami.h"

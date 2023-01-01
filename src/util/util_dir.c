@@ -49,7 +49,7 @@ char * get_exe_path(){
 */
 
 char *get_cur_path() {
-    char cwd[PATH_MAX];
+    char cwd[500];
     if (getcwd(cwd, sizeof(cwd)) != NULL) {
         return cwd;
     } else {

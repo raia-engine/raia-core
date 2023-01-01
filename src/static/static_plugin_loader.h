@@ -6,9 +6,10 @@
 #define RAIA_CORE_STATIC_PLUGIN_LOADER_H
 
 #include <stdio.h>
-#include "../meta/platform.h"
 
+#include "../meta/platform.h"
 #ifdef __WINDOWS__
+#define _CRT_SECURE_NO_WARNINGS
 #include <windows.h>
 #else
 
