@@ -17,7 +17,13 @@ void init_plugin_loader(void) {
 }
 
 void open_plugin(const char *dll_file) {
-    void * handle = raia_dlopen(dll_file);
+#ifdef __LINUX__
+    char path[500];
+    sprintf(path, "./%s\0", dll_file);
+    void * handle = raia_dlopen(path);
+#else
+    void * handle = raia_dlopen("./raia_app.so");
+#endif
     list_node_t *plugin_list_node = list_node_new(handle);
     list_rpush(lib_list, plugin_list_node);
     lib_list_count++;
